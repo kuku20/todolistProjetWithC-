@@ -62,32 +62,33 @@ createNewAccount(MYSQL* conn){
     //user input create new account
     int exist=0;
     //check if the exist user
-    while(exist==0){
+    do {
         cout<< "Enter username  :"<<endl;
         cin>>usernamedb;
         if(conn){
             int check=mysql_query(conn,"SELECT `username` FROM `users`");
             //exist=1;
+            exist=0;
             if(!check){
                 res=mysql_store_result(conn);
                 int count =mysql_num_fields(res);
                 while(row=mysql_fetch_row(res)){
                     for(int i=0;i<count;i++){
                         if(usernamedb==row[i]){
-                           exist=0;
-                           cout<<"This user already exist. Please Input new one...\n";
+                           exist-=1;
                            //cout<<exit;
-                        }else{
-                            exist=1;
                         }
                     }
+                }
+                if(exist<0){
+                   cout<<"This user already exist. Please Input new one...\n";
                 }
             }
             }else{
 
             cout<<"Failed to load";
             }
-    }
+    }while(exist<0);
 
     cout<< "Enter email:"<<endl;
     cin>>emailbd;
