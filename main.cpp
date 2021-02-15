@@ -29,10 +29,10 @@ MYSQL*connectdatabase(){
     }
 }
 //login site
-login(MYSQL* conn){
+string login(MYSQL* conn){
+    cout<<"LOGIN:\n";
     int count=0;
     while(count==0){
-
         cout<< "Enter username: "<<endl;
         cin>>usernamedb;
         cout<< "Enter password: "<<endl;
@@ -44,12 +44,9 @@ login(MYSQL* conn){
              while(row=mysql_fetch_row(res)){
                     //pass[1] username[2]
                     if(row[1]==passdb && row[2]==usernamedb){
-                        count=1;
-                        int num;
-                        string s= row[3];
-                        istringstream(s) >> num;
+                       // count=1;
                         cout<<"Logined\n";
-                        return num;
+                        return usernamedb;
                     }
              }
              if(count==0){
@@ -117,9 +114,9 @@ int main()
     int number;
     cin>>number;
     if(number==1){
-       int userId= login(conn);
+       string user= login(conn);
        //either can use id or username from the input
-        cout<<"return Id: "<<userId;
+        cout<<"return user: "<<user;
         //cout<<usernamedb;
 
     }else{
@@ -127,3 +124,7 @@ int main()
     }
     return 0;
 }
+
+
+
+
